@@ -22,6 +22,21 @@ import (
 	"github.com/silenceper/wechat/v2/officialaccount/user"
 )
 
+var account *OfficialAccount
+
+func GetWechatAccount() *OfficialAccount {
+	if account != nil {
+		return account
+	}
+	return nil
+}
+
+func SetWechatAccount(a *OfficialAccount) {
+	if a != nil {
+		account = a
+	}
+}
+
 // OfficialAccount 微信公众号相关API
 type OfficialAccount struct {
 	ctx *context.Context

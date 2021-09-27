@@ -1,0 +1,26 @@
+#环境
+env = "testing"
+
+app_name = "for_blossem"
+
+http_port = ":8082"
+
+[mysql]
+    [mysql.master]
+    user = "root"
+    password = ""
+    host = "127.0.0.1"#"192.168.50.196" # docker访问本地机
+    port = 3306
+    db = "test"
+    max_idle = 100
+    max_open = 200
+    name = ""
+    debug = true
+
+[wechat_conf]
+    app_id = "wxaedd0f554d9e684a"
+    app_secret = "130ed4ec9d2cdcbcaadcf6b0da9e53b4"
+    token = ""
+
+[redis]
+    host = "127.0.0.1:6379"

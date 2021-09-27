@@ -7,4 +7,4 @@ Package wechat provide wechat sdk for go
 更多信息：https://github.com/silenceper/wechat
 
 */
-package wechat
+package main

@@ -7,9 +7,24 @@ import (
 	"github.com/gomodule/redigo/redis"
 )
 
+var redisClient *Redis
+
+func GetRedisClient() *Redis{
+	if redisClient != nil {
+		return redisClient
+	}
+	return nil
+}
+
+func SetRedisClient(client *Redis) {
+	if client != nil {
+		redisClient = client
+	}
+}
+
 // Redis .redis cache
 type Redis struct {
-	conn *redis.Pool
+	Conn *redis.Pool
 }
 
 // RedisOpts redis 连接属性
@@ -48,17 +63,17 @@ func NewRedis(opts *RedisOpts, dialOpts ...redis.DialOption) *Redis {
 
 // SetRedisPool 设置redis连接池
 func (r *Redis) SetRedisPool(pool *redis.Pool) {
-	r.conn = pool
+	r.Conn = pool
 }
 
 // SetConn 设置conn
 func (r *Redis) SetConn(conn *redis.Pool) {
-	r.conn = conn
+	r.Conn = conn
 }
 
 // Get 获取一个值
 func (r *Redis) Get(key string) interface{} {
-	conn := r.conn.Get()
+	conn := r.Conn.Get()
 	defer conn.Close()
 
 	var data []byte
@@ -76,7 +91,7 @@ func (r *Redis) Get(key string) interface{} {
 
 // Set 设置一个值
 func (r *Redis) Set(key string, val interface{}, timeout time.Duration) (err error) {
-	conn := r.conn.Get()
+	conn := r.Conn.Get()
 	defer conn.Close()
 
 	var data []byte
@@ -91,7 +106,7 @@ func (r *Redis) Set(key string, val interface{}, timeout time.Duration) (err err
 
 // IsExist 判断key是否存在
 func (r *Redis) IsExist(key string) bool {
-	conn := r.conn.Get()
+	conn := r.Conn.Get()
 	defer conn.Close()
 
 	a, _ := conn.Do("EXISTS", key)
@@ -101,7 +116,7 @@ func (r *Redis) IsExist(key string) bool {
 
 // Delete 删除
 func (r *Redis) Delete(key string) error {
-	conn := r.conn.Get()
+	conn := r.Conn.Get()
 	defer conn.Close()
 
 	if _, err := conn.Do("DEL", key); err != nil {
