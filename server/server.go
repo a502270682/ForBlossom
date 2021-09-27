@@ -2,13 +2,14 @@ package server
 
 import (
 	"context"
+	wechat_account "forBlossem/adapter/account"
 	"forBlossem/adapter/log"
 	"forBlossem/adapter/mysql"
 	"forBlossem/cache"
 	"forBlossem/config"
-	"forBlossem/officialaccount"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
+	"github.com/silenceper/wechat/v2/officialaccount"
 	config2 "github.com/silenceper/wechat/v2/officialaccount/config"
 	"github.com/urfave/cli"
 )
@@ -97,7 +98,7 @@ func NewServer(ctx context.Context) *Server {
 
 		// wechat init
 		account := initWechat(conf, redisClient)
-		officialaccount.SetWechatAccount(account)
+		wechat_account.SetWechatAccount(account)
 
 		r := gin.Default()
 		routes(r)
