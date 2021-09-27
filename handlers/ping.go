@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"context"
+	wechat_account "forBlossem/adapter/account"
 	"forBlossem/adapter/error_code"
-	"forBlossem/officialaccount"
 	"forBlossem/proto"
 )
 
@@ -13,7 +13,7 @@ func PingHandler(ctx context.Context, req *proto.PingReq, rsp *proto.PingRsp) *e
 }
 
 func AccessTokenGetHandler(ctx context.Context, req *struct{}, rsp *proto.AccessTokenRsp) *error_code.ReplyError {
-	token, err := officialaccount.GetWechatAccount().GetAccessToken()
+	token, err := wechat_account.GetWechatAccount().GetAccessToken()
 	if err != nil {
 		return error_code.Error(error_code.CodeSystemError, err.Error())
 	}
